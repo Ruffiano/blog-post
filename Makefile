@@ -1,5 +1,8 @@
 DB_URL=postgresql://root:secret@localhost:5432/blog_post?sslmode=disable
 
+imagerm:
+	docker rm -vf $(docker ps -aq)
+
 network:
 	docker network create blog-network
 
@@ -10,7 +13,7 @@ mysql:
 	docker run --name mysql8 -p 3306:3306  -e MYSQL_ROOT_PASSWORD=secret -d mysql:8
 
 createdb:
-	docker exec -it postgres createdb --username=root --owner=root blog_post
+	docker exec -it postgres-blog-post createdb --username=root --owner=root blog_post
 
 dropdb:
 	docker exec -it postgres dropdb blog_post
@@ -65,4 +68,4 @@ evans:
 redis:
 	docker run --name redis -p 6379:6379 -d redis:7-alpine
 
-.PHONY: network postgres createdb dropdb migrateup migratedown migrateup1 migratedown1 new_migration db_docs db_schema sqlc test server mock proto evans redis
+.PHONY: imagerm network postgres createdb dropdb migrateup migratedown migrateup1 migratedown1 new_migration db_docs db_schema sqlc test server mock proto evans redis
