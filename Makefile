@@ -9,8 +9,6 @@ network:
 postgres:
 	docker run --name postgres-blog-post --network blog-network -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres:14-alpine
 
-mysql:
-	docker run --name mysql8 -p 3306:3306  -e MYSQL_ROOT_PASSWORD=secret -d mysql:8
 
 createdb:
 	docker exec -it postgres-blog-post createdb --username=root --owner=root blog_post
@@ -21,26 +19,17 @@ dropdb:
 migrateup:
 	migrate -path db/migration -database "$(DB_URL)" -verbose up
 
-migrateup1:
-	migrate -path db/migration -database "$(DB_URL)" -verbose up 1
-
 migratedown:
 	migrate -path db/migration -database "$(DB_URL)" -verbose down
 
-migratedown1:
-	migrate -path db/migration -database "$(DB_URL)" -verbose down 1
-
-new_migration:
-	migrate create -ext sql -dir db/migration -seq $(name)
+sqlc:
+	sqlc generate
 
 db_docs:
 	dbdocs build doc/db.dbml
 
 db_schema:
 	dbml2sql --postgres -o doc/schema.sql doc/db.dbml
-
-sqlc:
-	sqlc generate
 
 test:
 	go test -v -cover -short ./...
@@ -68,4 +57,4 @@ evans:
 redis:
 	docker run --name redis -p 6379:6379 -d redis:7-alpine
 
-.PHONY: imagerm network postgres createdb dropdb migrateup migratedown migrateup1 migratedown1 new_migration db_docs db_schema sqlc test server mock proto evans redis
+.PHONY: imagerm network postgres createdb dropdb migrateup migratedown db_docs db_schema sqlc test server mock proto evans redis

@@ -7,13 +7,14 @@ CREATE TABLE "article" (
   "created_at" timestamptz NOT NULL DEFAULT (now())
 );
 
-CREATE TABLE "user" (
+CREATE TABLE "users" (
   "id" bigserial PRIMARY KEY NOT NULL,
   "email" varchar NOT NULL,
-  "password" varchar NOT NULL,
-  "name" varchar NOT NULL,
-  "updated_at" timestamptz NOT NULL DEFAULT (now()),
+  "hashed_password" varchar NOT NULL,
+  "username" varchar NOT NULL,
+  "is_email_verified" bool NOT NULL DEFAULT false,
+  "password_changed_at" timestamptz NOT NULL DEFAULT('0001-01-01 00:00:00Z'),  
   "created_at" timestamptz NOT NULL DEFAULT (now())
 );
 
-ALTER TABLE IF EXISTS "article" ADD CONSTRAINT "fk_user_id" FOREIGN KEY ("user_id") REFERENCES "user" ("id");
+ALTER TABLE IF EXISTS "article" ADD CONSTRAINT "fk_user_id" FOREIGN KEY ("user_id") REFERENCES "users" ("id");

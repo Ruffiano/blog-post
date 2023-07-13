@@ -1,2 +1,2 @@
 DROP TABLE IF EXISTS "article";
-DROP TABLE IF EXISTS "user";
+DROP TABLE IF EXISTS "users";
