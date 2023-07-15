@@ -4,20 +4,20 @@ import (
 	"database/sql"
 	"log"
 	"os"
+	"ruffiano/blog-post/util"
 	"testing"
 
 	_ "github.com/lib/pq"
 )
 
-const (
-	dbDriver = "postgres"
-	dbSource = "postgresql://root:secret@localhost:5432/blog_post?sslmode=disable"
-)
-
 var testQueries *Queries
 
 func TestMain(m *testing.M) {
-	conn, err := sql.Open(dbDriver, dbSource)
+	config, err := util.LoadConfig("../../")
+	if err != nil {
+		log.Fatal("Cannot load config: ", err)
+	}
+	conn, err := sql.Open(config.DBDriver, config.DBSource)
 	if err != nil {
 		log.Fatal("Cannot connect to db: ", err)
 	}
