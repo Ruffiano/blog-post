@@ -1,0 +1,2 @@
+#6 da Transactionlarga doir mavzu bo`lib, agar A accountdan bowqa B accountga pul otqazilsa, pracess dovomida transaction fail bolishi mumkin, ana shunday hollarda transaction tugalanmagan boladi.
+Agar transaction tugalanmagan bolsa DB ga malumotlar yozilishi kerak emas. #6, #7, #8 #9 ACID property (ACID is an acronym that stands for atomicity, consistency, isolation, and durability. Together, these ACID properties ensure that a set of database operations (grouped together in a transaction) leave the database in a valid state even in the event of unexpected errors.)
