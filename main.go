@@ -3,12 +3,13 @@ package main
 import (
 	"database/sql"
 	"log"
-	"ruffiano/blog-post/api"
-	"ruffiano/blog-post/util"
+
+	"github.com/ruffiano/blog-post/api"
+	"github.com/ruffiano/blog-post/util"
 
 	_ "github.com/lib/pq"
 
-	db "ruffiano/blog-post/db/sqlc"
+	db "github.com/ruffiano/blog-post/db/sqlc"
 )
 
 func main() {

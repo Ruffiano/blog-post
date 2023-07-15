@@ -2,7 +2,7 @@ package db
 
 import (
 	"context"
-	"ruffiano/blog-post/util"
+	"github.com/ruffiano/blog-post/util"
 	"testing"
 	"time"
 

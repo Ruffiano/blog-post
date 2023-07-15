@@ -1,7 +1,7 @@
 package api
 
 import (
-	db "ruffiano/blog-post/db/sqlc"
+	db "github.com/ruffiano/blog-post/db/sqlc"
 
 	"github.com/gin-gonic/gin"
 )

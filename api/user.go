@@ -2,9 +2,11 @@ package api
 
 import (
 	"net/http"
-	db "ruffiano/blog-post/db/sqlc"
-	"ruffiano/blog-post/util"
 	"time"
+
+	"github.com/ruffiano/blog-post/util"
+
+	db "github.com/ruffiano/blog-post/db/sqlc"
 
 	"github.com/gin-gonic/gin"
 	"github.com/lib/pq"

@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"log"
 	"os"
-	"ruffiano/blog-post/util"
+	"github.com/ruffiano/blog-post/util"
 	"testing"
 
 	_ "github.com/lib/pq"
