@@ -2,7 +2,8 @@ package main
 
 import (
 	"database/sql"
-	"log"
+
+	"github.com/rs/zerolog/log"
 
 	"github.com/ruffiano/blog-post/api"
 	"github.com/ruffiano/blog-post/util"
@@ -15,21 +16,40 @@ import (
 func main() {
 	config, err := util.LoadConfig(".")
 	if err != nil {
-		log.Fatal("Cannot load config: ", err)
+		log.Fatal().Msg("cannot load config: ")
 	}
 	conn, err := sql.Open(config.DBDriver, config.DBSource)
 	if err != nil {
-		log.Fatal("Cannot connect to db: ", err)
+		log.Fatal().Msg("cannot connect to db:")
 	}
+
+	// runDBMigration(config.MigrationURL, config.DBSource)
 
 	store := db.NewStore(conn)
-	server, err := api.NewServer(store)
+	runGinServer(config, store)
+}
+
+// func runDBMigration(migrationURL string, dbSource string) {
+// 	migration, err := migrate.New(migrationURL, dbSource)
+// 	if err != nil {
+// 		log.Fatal().Msg("cannot create new migrate instance: ")
+// 	}
+
+// 	if err = migration.Up(); err != nil && err != migrate.ErrNoChange {
+// 		log.Fatal().Msg("failed to run migrate up: ")
+// 	}
+
+// 	log.Print("db migrated successfully")
+// }
+
+func runGinServer(config util.Config, store db.Store) {
+	server, err := api.NewServer(config, store)
 	if err != nil {
-		log.Fatal("cannot create sever:", err)
+		log.Fatal().Msg("cannot create sever: ")
 	}
 
-	err = server.Start(config.ServerAddress)
+	err = server.Start(config.HTTPServerAddress)
 	if err != nil {
-		log.Fatal("Cannot start server: ", err)
+		log.Fatal().Msg("cannot start server: ")
 	}
 }

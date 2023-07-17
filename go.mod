@@ -4,9 +4,12 @@ go 1.19
 
 require (
 	github.com/gin-gonic/gin v1.9.1
+	github.com/go-playground/validator v9.31.0+incompatible
 	github.com/golang-jwt/jwt/v4 v4.5.0
+	github.com/golang-migrate/migrate v3.5.4+incompatible
 	github.com/google/uuid v1.1.2
 	github.com/lib/pq v1.10.9
+	github.com/rs/zerolog v1.29.1
 	github.com/spf13/viper v1.16.0
 	github.com/stretchr/testify v1.8.4
 	go.uber.org/mock v0.2.0
@@ -29,6 +32,7 @@ require (
 	github.com/klauspost/cpuid/v2 v2.2.5 // indirect
 	github.com/leodido/go-urn v1.2.4 // indirect
 	github.com/magiconair/properties v1.8.7 // indirect
+	github.com/mattn/go-colorable v0.1.12 // indirect
 	github.com/mattn/go-isatty v0.0.19 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
@@ -47,6 +51,7 @@ require (
 	golang.org/x/sys v0.10.0 // indirect
 	golang.org/x/text v0.11.0 // indirect
 	google.golang.org/protobuf v1.31.0 // indirect
+	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
