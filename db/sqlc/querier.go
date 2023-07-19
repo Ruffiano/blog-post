@@ -11,10 +11,13 @@ import (
 )
 
 type Querier interface {
+	CreateArticle(ctx context.Context, arg CreateArticleParams) (Article, error)
 	CreateSession(ctx context.Context, arg CreateSessionParams) (Session, error)
 	CreateUser(ctx context.Context, arg CreateUserParams) (User, error)
+	GetArticle(ctx context.Context, userID int64) (Article, error)
 	GetSession(ctx context.Context, id uuid.UUID) (Session, error)
 	GetUser(ctx context.Context, username string) (User, error)
+	UpdateArticle(ctx context.Context, arg UpdateArticleParams) (Article, error)
 	UpdateSession(ctx context.Context, arg UpdateSessionParams) (Session, error)
 	UpdateUser(ctx context.Context, arg UpdateUserParams) (User, error)
 }

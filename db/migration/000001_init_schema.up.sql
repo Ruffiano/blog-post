@@ -1,8 +1,8 @@
 CREATE TABLE "article" (
   "id" bigserial PRIMARY KEY NOT NULL,
-  "user_id" bigint,
-  "title" varchar,
-  "content" varchar,
+  "user_id" bigint NOT NULL,
+  "title" varchar NOT NULL,
+  "content" varchar NOT NULL,
   "updated_at"  timestamptz NOT NULL DEFAULT (now()),
   "created_at" timestamptz NOT NULL DEFAULT (now())
 );
