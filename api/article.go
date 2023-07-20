@@ -1,6 +1,7 @@
 package api
 
 import (
+	"database/sql"
 	"net/http"
 	"time"
 
@@ -65,6 +66,50 @@ func (server *Server) createArticle(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, resp)
 }
 
-func (server *Server) updateArticle(ctx *gin.Context) {
+type updateArticleRequest struct {
+	Title   string `json:"title" binding:"required"`
+	Content string `json:"content" binding:"required,min=6"`
+}
 
+/*
+updateArticleRequest ->POST
+*/
+func (server *Server) updateArticle(ctx *gin.Context) {
+	var req updateArticleRequest
+	if err := ctx.ShouldBindJSON(&req); err != nil {
+		ctx.JSON(http.StatusBadRequest, errorResponse(err))
+		return
+	}
+
+	authPayload := ctx.MustGet(authorizationPayloadKey).(*token.Payload)
+
+	arg := db.UpdateArticleParams{
+		UserID:    authPayload.UserID,
+		Title:     sql.NullString{String: req.Title, Valid: true},
+		Content:   sql.NullString{String: req.Content, Valid: true},
+		UpdatedAt: sql.NullTime{Time: time.Now(), Valid: true},
+	}
+
+	article, err := server.store.UpdateArticle(ctx, arg)
+	if err != nil {
+		if pqErr, ok := err.(*pq.Error); ok {
+			switch pqErr.Code.Name() {
+			case "unique_violation":
+				ctx.JSON(http.StatusForbidden, errorResponse(err))
+				return
+			}
+		}
+		ctx.JSON(http.StatusInternalServerError, errorResponse(err))
+		return
+	}
+
+	resp := createArticleResonse{
+		ID:        article.ID,
+		Title:     article.Title,
+		Content:   article.Content,
+		UserID:    article.UserID,
+		UpdatedAt: article.CreatedAt,
+		CreatedAt: article.CreatedAt,
+	}
+	ctx.JSON(http.StatusOK, resp)
 }
